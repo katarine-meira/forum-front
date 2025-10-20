@@ -21,7 +21,7 @@
         @mouseleave="miniState = true"
 
         :width="200"
-        :breakpoint="500"
+        :breakpoint="620"
         bordered
         :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
       >
