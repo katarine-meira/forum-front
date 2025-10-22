@@ -1,6 +1,6 @@
 <template>
-    <div class="q-pa-none absolute-center">
-        <div class="estiloCard">
+    <div class="q-mt-xl">
+        <div class="meu-card">
             <input-comp/>
             <feed-comp/>
         </div>
@@ -14,9 +14,23 @@ import InputComp from 'src/components/InputComp.vue';
 </script>
 
 <style scoped>
+    .meu-card {
+        width: 700px; /* tamanho padrão */
+        margin: 0 auto;
+        transition: width 0.3s ease;
+    }
+
+    /* telas médias (tablets) */
+    @media (max-width: 1024px) {
+        .meu-card {
+            width: 500px;
+        }
+    }
+
+    /* telas pequenas (celulares) */
     @media (max-width: 600px) {
-        .estiloCard{ 
-            width: 90vw !important;
+        .meu-card {
+            width: 90%; /* ocupa quase toda a tela */
         }
     }
 </style>

@@ -1,8 +1,9 @@
 <template>
-    <h1>Olá page home</h1>
+    <conexao-teste/>
 </template>
 
 <script setup>
+import ConexaoTeste from 'src/components/ConexaoTeste.vue';
 
 </script>
 
