@@ -9,6 +9,18 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({ baseURL: 'http://localhost:3000' }) //a porta do meu backend
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+
+  return config
+}, (error) => {
+  return Promise.reject(error)
+})
+
 export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -20,5 +32,7 @@ export default defineBoot(({ app }) => {
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })
+
+
 
 export { api }

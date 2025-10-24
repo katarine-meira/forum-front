@@ -1,9 +1,8 @@
 <template>
-    <conexao-teste/>
+    <h1>pag home</h1>
 </template>
 
 <script setup>
-import ConexaoTeste from 'src/components/ConexaoTeste.vue';
 
 </script>
 

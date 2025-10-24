@@ -5,7 +5,7 @@
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title>ForumDev</q-toolbar-title>
 
-          <q-btn id="links">
+          <q-btn id="links" to="/auth">
            <q-icon name="logout" />
            Sair
           </q-btn>
