@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card>
+    <q-card v-for="(question, index) in questionsStore.questions" :key="index">
       <q-item>
         <q-item-section avatar>
           <q-avatar>
@@ -9,8 +9,8 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>Title</q-item-label>
-          <q-item-label caption>Subhead</q-item-label>
+          <q-item-label>{{ question.user.name }}</q-item-label>
+          <q-item-label caption>{{ question.user.email }}</q-item-label>
         </q-item-section>
         
         <q-btn color="grey" round flat icon="more_vert" @click="more = true"/>
@@ -31,11 +31,11 @@
       </q-item>
 
       <q-card-section>
-        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-h6">{{ question.title }}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        {{ lorem }}
+        {{ question.body }}
       </q-card-section>
       <q-card-actions>
         <!-- <q-btn flat color="negative" round icon="favorite" /> -->
@@ -95,11 +95,18 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue'
-    
+    import { ref, onMounted } from 'vue'
+    import { useQuestionsStore } from 'src/store/questions'
+
     const expanded = ref(false)
     const more = ref(false)
-    const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    
+    const questionsStore = useQuestionsStore()
+
+    onMounted(async () => {
+      await questionsStore.getQuestions() // busca as perguntas na API ao carregar
+    })
+
 </script>
 
 <style scoped>
