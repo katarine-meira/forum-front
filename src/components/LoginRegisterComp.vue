@@ -32,6 +32,9 @@
               type="email"
               outlined
               class="q-mb-md"
+              :rules="[
+                val => !!val || 'O e-mail é obrigatório'
+              ]"
             />
             <q-input
               v-model="formLogin.password"
@@ -39,6 +42,7 @@
               type="password"
               outlined
               class="q-mb-md"
+              :rules="[ val => val && val.length > 0 || 'A senha é obrigatória']"
             />
             <div class="row justify-end">
               <q-btn
@@ -58,6 +62,11 @@
               label="Nome"
               outlined
               class="q-mb-md"
+              :rules="[
+                val => !!val || 'O nome é obrigatório',
+                val => val.length >= 3 || 'Mínimo 3 caracteres',
+                val => val.length <= 32 || 'Máximo 50 caracteres'
+              ]"
             />
             <q-input
               v-model="formRegister.email"
@@ -65,6 +74,10 @@
               type="email"
               outlined
               class="q-mb-md"
+              :rules="[
+                val => !!val || 'O e-mail é obrigatório',
+                val => val.length <= 100 || 'Máximo 100 caracteres'
+              ]"
             />
             <q-input
               v-model="formRegister.password"
@@ -72,6 +85,11 @@
               type="password"
               outlined
               class="q-mb-md"
+              :rules="[
+                val => !!val || 'A senha é obrigatória',
+                val => val.length >= 6 || 'Mínimo 6 caracteres',
+                val => val.length <= 32 || 'Máximo 32 caracteres'
+              ]"
             />
             <div class="row justify-end">
               <q-btn
@@ -88,11 +106,12 @@
 </template>
 
 <script setup>
+    import { useQuasar } from 'quasar'
     import { ref } from 'vue'
     import { useAuthStore } from 'src/store/auth'
     import { useRouter } from 'vue-router'
 
-
+    const $q = useQuasar()
     const tab = ref('login')
     const router = useRouter()
     
@@ -113,9 +132,22 @@
       try {
         const token = await login(formLogin.value.email, formLogin.value.password)
         console.log(token, 'login')
+
+        $q.notify({
+          type: 'positive',
+          message: 'Login realizado com sucesso!',
+          position: 'top'
+        })
+
         router.push("/home")
       } catch (err) {
         console.error(err)
+
+        $q.notify({
+          type: 'negative',
+          message: 'E-mail ou senha incorretos.',
+          position: 'top'
+        })
       }
       
     }
@@ -124,8 +156,31 @@
       try {
         const token = await register(formRegister.value.nome, formRegister.value.email, formRegister.value.password)
         console.log(token, 'register')
+
+        $q.notify({
+          type: 'positive',
+          message: 'Registro realizado com sucesso!',
+          position: 'top'
+        })
+
+        router.push("/home")
       } catch (err) {
-        console.error(err)
+        let msg = err.response?.data?.message
+
+        if (Array.isArray(msg)) {
+          msg = msg.map(m => {
+            if (m.includes('email must be an email')) return 'E-mail inválido'
+            if (m.includes('name must be longer')) return 'O nome deve ter no mínimo 3 caracteres'
+            if (m.includes('password must be longer')) return 'A senha deve ter no mínimo 6 caracteres'
+            return m // caso não encontre tradução, mantém original
+          }).join('\n')
+        }
+
+        $q.notify({
+          type: 'negative',
+          message: msg || 'Erro ao registrar usuário',
+          position: 'top'
+        })
       }
 
     }

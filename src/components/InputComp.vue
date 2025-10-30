@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="">
+    <q-card class="q-mb-lg">
       <q-item>
         <q-item-section avatar>
           <q-avatar>
@@ -25,7 +25,6 @@
         <q-btn class="q-pr-xl" color="white" text-color="black" label="postar" style="width: 90px" />
       </q-card-actions>
     </q-card>
-    <br><br>
   </div>
 </template>
 

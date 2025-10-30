@@ -5,7 +5,7 @@
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title>ForumDev</q-toolbar-title>
 
-          <q-btn id="links" to="/auth">
+          <q-btn id="links" @click="userLogout">
            <q-icon name="logout" />
            Sair
           </q-btn>
@@ -48,6 +48,9 @@
 import { ref } from 'vue'
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { useAuthStore } from 'src/store/auth'
+
+const { logout } = useAuthStore()
 
     const $q = useQuasar()
     const route = useRouter();
@@ -69,6 +72,29 @@ import { useRouter } from "vue-router";
         link: '/forum'
     },
     ]
+
+  async function userLogout() {
+    try {
+      logout()
+      route.push('/auth')
+
+      $q.notify({
+        color: 'primary',
+        type: 'info',
+        message: 'Você saiu da sua conta.',
+        position: 'top'
+      })
+    } catch (error) {
+      console.error(error)
+
+        $q.notify({
+          type: 'negative',
+          message: 'Error ao sair.',
+          position: 'top'
+        })
+    }
+  }
+
 </script>
 
 <style scoped>
