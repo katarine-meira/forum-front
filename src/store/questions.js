@@ -21,5 +21,21 @@ export const useQuestionsStore = defineStore('questions', {
         throw error
       }
     },
+    async postQuestion(title, body) {
+      this.error = null
+      try {
+        const { data: dataPostQuestions } = await api.post('/questions', {
+          title,
+          body,
+        })
+
+        return dataPostQuestions
+
+      } catch (error) {
+        this.error =
+          error.response?.data?.message || 'Erro ao criar questão!'
+        throw error
+      }
+    },
   },
 })

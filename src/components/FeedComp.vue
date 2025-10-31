@@ -1,6 +1,6 @@
 <template>
   <div class="q-mb-xl" v-for="(question, index) in questionsStore.questions" :key="index">
-    <q-card bordered flat class="q-pa-md q-mb-md">
+    <q-card bordered flat class="q-pa-sm q-mb-md">
       <q-item>
         <q-item-section avatar>
           <q-avatar>
@@ -34,7 +34,7 @@
         <div class="text-h6">{{ question.title }}</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none">
+      <q-card-section class="q-pt-none question-body">
         {{ question.body }}
       </q-card-section>
       
@@ -75,10 +75,16 @@
 </script>
 
 <style scoped>
-    .test{
-        border: 50px;
-    }
-    .border-left {
-      border-left: 2px solid #ddd;
-    }
+  .test{
+    border: 50px;
+  }
+  .border-left {
+    border-left: 2px solid #ddd;
+  }
+
+  .question-body {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
 </style>
