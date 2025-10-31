@@ -36,7 +36,7 @@
   import { ref } from 'vue'
 
   const $q = useQuasar()
-  const { postQuestion } = useQuestionsStore()
+  const questionsStore = useQuestionsStore()
   
   const question = ref({
     title: '',
@@ -45,15 +45,16 @@
 
   async function createQuestion() {
       try {
-        const token = await postQuestion(question.value.title, question.value.body)
-        console.log(token, 'question')
+        await questionsStore.postQuestion(question.value.title, question.value.body)
 
         $q.notify({
           type: 'positive',
           message: 'Questão criada com sucesso!',
           position: 'top'
         })
-
+        
+        question.value.title = ''
+        question.value.body = ''
       } catch (err) {
         console.error(err)
 

@@ -39,7 +39,6 @@
       </q-card-section>
       
     </q-card>
-
     <div class="q-ml-xl q-mb-md q-pl-sm border-left" v-for="(answer, i) in question.answers" :key="i">
       <div class="row items-start no-wrap">
         <q-avatar size="35px" class="q-mr-sm">
@@ -50,21 +49,23 @@
             <div class="text-weight-medium q-mr-sm">{{ answer.user.name }}</div>
             <div class="text-caption text-grey">{{answer.createdAt}}</div>
           </div>
-          <div class="text-body2 q-mt-xs">
+          <div class="text-body2 q-mt-xs question-body">
             {{answer.body}}
           </div>
         </div>
       </div>
     </div>
+    <input-answer-comp :question-id="question.id"/>
+    
   </div>
 </template>
 
 <script setup>
-    import { ref, onMounted } from 'vue'
+    import { onMounted } from 'vue'
     import { useQuestionsStore } from 'src/store/questions'
+    import InputAnswerComp from 'src/components/InputAnswerComp.vue';
 
 
-    const more = ref(false)
     
     const questionsStore = useQuestionsStore()
 

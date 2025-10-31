@@ -11,10 +11,9 @@ export const useQuestionsStore = defineStore('questions', {
       this.error = null
       try {
         const { data } = await api.get('/questions')
-        console.log(data)
+        
 
-        this.questions = { ...data }
-        return this.questions
+        this.questions = Array.isArray(data) ? data : data.questions || []
       } catch (error) {
         this.error =
           error.response?.data?.message || 'Erro ao buscar Questions'
@@ -24,13 +23,13 @@ export const useQuestionsStore = defineStore('questions', {
     async postQuestion(title, body) {
       this.error = null
       try {
-        const { data: dataPostQuestions } = await api.post('/questions', {
+        const { data: newQuestion } = await api.post('/questions', {
           title,
           body,
         })
 
-        return dataPostQuestions
-
+        this.questions.unshift(newQuestion)
+        return newQuestion
       } catch (error) {
         this.error =
           error.response?.data?.message || 'Erro ao criar questão!'

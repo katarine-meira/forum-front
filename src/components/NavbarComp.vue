@@ -3,7 +3,7 @@
       <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>ForumDev</q-toolbar-title>
+          <q-toolbar-title>LITEC</q-toolbar-title>
 
           <q-btn id="links" @click="userLogout">
            <q-icon name="logout" />
