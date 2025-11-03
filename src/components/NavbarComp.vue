@@ -71,6 +71,24 @@ const { logout } = useAuthStore()
         separator: false,
         link: '/forum'
     },
+    {
+        icon: 'article',
+        label: 'Form',
+        separator: true,
+        link: '/form'
+    },
+    {
+        icon: 'account_circle',
+        label: 'Perfil',
+        separator: false,
+        link: '/profile'
+    },
+    {
+        icon: 'settings',
+        label: 'Configurações',
+        separator: false,
+        link: '/settings'
+    },
     ]
 
   async function userLogout() {
