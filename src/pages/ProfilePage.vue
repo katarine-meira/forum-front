@@ -1,7 +1,7 @@
 <template>
   <q-page class="bg-grey-1">
     <!-- Banner -->
-    <div class="relative-position">
+    <div class="relative-position q-ma-md">
       <q-img
         src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
         class="banner"
@@ -14,13 +14,14 @@
     </div>
 
     <!-- Conteúdo -->
-    <div class="q-pa-lg">
-      <div class="row q-col-gutter-lg">
+    <div>
+      <div class="row">
         <!-- Coluna lateral -->
-        <div class="col-12 col-md-3">
-          <q-card>
+        <div class="col-12 col-md-4">
+          <div class="q-ma-md">
+          <q-card class="">
             <q-card-section class="text-center">
-              <div class="text-h6">Katarina Oliveira</div>
+              <div class="text-h6">Katarine Oliveira</div>
               <div class="text-caption text-grey">Gerenciar sua conta</div>
             </q-card-section>
 
@@ -58,22 +59,24 @@
               <q-btn flat icon="add" label="Criar equipe" color="primary" />
             </q-card-section>
           </q-card>
+          </div>
         </div>
 
         <!-- Coluna principal -->
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-8">
+          <div class="q-ma-md">
           <q-card class="q-mb-md">
             <q-card-section>
-              <div class="text-h6">Trabalhou</div>
+              <div class="text-h6">Teste</div>
               <div class="text-caption text-grey">
-                Nenhum trabalho aqui
+                Nenhum teste aqui
               </div>
             </q-card-section>
           </q-card>
 
           <q-card class="q-mb-md">
             <q-card-section>
-              <div class="text-h6">Locais onde você trabalha</div>
+              <div class="text-h6">teste 2</div>
               <div class="text-caption text-grey">
                 Ainda não há lugares para mostrar
               </div>
@@ -82,12 +85,13 @@
 
           <q-card>
             <q-card-section>
-              <div class="text-h6">Estrutura organizacional</div>
+              <div class="text-h6">teste 3</div>
               <div class="text-caption text-grey">
-                Ver gerente e membros da equipe
+                nada ainda
               </div>
             </q-card-section>
           </q-card>
+          </div>
         </div>
       </div>
     </div>
@@ -107,13 +111,5 @@
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
-  .banner {
-    height: 120px;
-  }
-  .avatar {
-    size: 80px;
-    transform: translateY(40%);
-  }
-}
+
 </style>
