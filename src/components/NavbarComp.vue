@@ -27,7 +27,8 @@
       >
         <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
           <q-list padding>
-            <template v-for="(menuItem, index) in menuList" :key="index">
+            <template v-for="(menuItem, index) in menuList.filter(i => !i.down)" :key="index">
+              <q-space v-if="index === 3" />
               <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class">
                 <q-item-section avatar>
                   <q-icon :name="menuItem.icon" />
@@ -38,6 +39,22 @@
               </q-item>
               <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
             </template>
+          </q-list>
+          <q-list padding>
+            <div class="absolute-bottom full-width">
+              <template v-for="(menuItem, index) in menuList.filter(i => i.down)" :key="index">
+                <q-space v-if="index === 3" />
+                <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class">
+                  <q-item-section avatar>
+                    <q-icon :name="menuItem.icon" />
+                  </q-item-section>
+                  <q-item-section>
+                    {{ menuItem.label }}
+                  </q-item-section>
+                </q-item>
+                <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
+              </template>
+            </div>
           </q-list>
         </q-scroll-area>
       </q-drawer>
@@ -67,26 +84,28 @@ const { logout } = useAuthStore()
     },
     {
         icon: 'chat',
-        label: 'Forum',
+        label: 'Fórum',
         separator: false,
         link: '/forum'
     },
     {
         icon: 'article',
         label: 'Form',
-        separator: true,
+        separator: false,
         link: '/form'
     },
     {
         icon: 'account_circle',
         label: 'Perfil',
         separator: false,
+        down: true,
         link: '/profile'
     },
     {
         icon: 'settings',
         label: 'Configurações',
         separator: false,
+        down:  true,
         link: '/settings'
     },
     ]

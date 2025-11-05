@@ -8,6 +8,8 @@
             <q-img
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
               class="banner"
+              no-transition
+              no-spinner
             />
           </div>
         </div>

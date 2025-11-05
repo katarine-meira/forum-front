@@ -8,7 +8,7 @@
                 <div class="text-h6">Katarine Oliveira</div>
                 <q-btn flat color="primary"> 
                     <q-icon class="q-pr-xs" name="edit" size="18px" />
-                    <label for="">Editar perfil</label>
+                    <span>Editar perfil</span>
                 </q-btn>
               </q-card-section>
 
