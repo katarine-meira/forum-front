@@ -4,14 +4,15 @@
           <div class="q-ma-md">
             <q-card bordered flat>
               <q-card-section class="text-center">
-                    <div class="text-h6">{{ userStore?.user.name || 'Usuário' }}</div>                <q-btn @click="edit = true" flat color="primary"> 
-                    <q-icon class="q-pr-xs" name="edit" size="18px" />
-                    <span>Editar perfil</span>
-                </q-btn>
+                    <div class="text-h6">{{ userStore?.user.name || 'Usuário' }}</div>                
+                    <q-btn @click="edit = true" flat color="primary"> 
+                      <q-icon class="q-pr-xs" name="edit" size="18px" />
+                      <span>Editar perfil</span>
+                    </q-btn>
               </q-card-section>
 
               <q-dialog v-model="edit">
-                <q-card>
+                <q-card style="width: 700px; max-width: 80vw;">
                   <q-card-section>
                     <div class="text-h6">Editar perfil</div>
                   </q-card-section>
@@ -19,36 +20,125 @@
                   <q-separator />
 
                   <q-card-section style="max-height: 50vh" class="scroll">
-                    <q-form>
-                      <q-input
-                        v-model="formEditProfile.nome"
-                        label="Nome"
-                        outlined
-                        class="q-mb-md"
-                        :rules="[
-                          val => !!val || 'O nome é obrigatório',
-                          val => val.length >= 3 || 'Mínimo 3 caracteres',
-                          val => val.length <= 32 || 'Máximo 50 caracteres'
-                        ]"
+                    <div class="relative-position">
+                      <!-- :src="bannerPreview || bannerUrl" -->
+                      <q-img
+                        :src="bannerPreview"
+                        style="height: 180px; object-fit: cover; background-color: darkgray;"
                       />
-                      <q-input
-                        v-model="formEditProfile.email"
-                        label="E-mail"
-                        type="email"
-                        outlined
-                        class="q-mb-md"
-                        :rules="[
-                          val => !!val || 'O e-mail é obrigatório',
-                          val => val.length <= 100 || 'Máximo 100 caracteres'
-                        ]"
-                      />
-                      
-                      <q-input outlined v-model="formEditProfile.bio" label="Bio" :dense="dense" />
-                      <q-input outlined v-model="formEditProfile.semestre" label="Seu semestre" :dense="dense" />
-                      <q-input outlined v-model="formEditProfile.linkedin" label="Seu Linkedin" :dense="dense" />
-                      <q-input outlined v-model="formEditProfile.github" label="Seu GitHub" :dense="dense" />
-                      <q-input outlined v-model="formEditProfile.habilidades" label="Habilidades" :dense="dense" />
-                    </q-form>
+                      <div class="absolute-center">
+                        <q-btn
+                          round
+                          dense
+                          flat
+                          size="25px"
+                          icon="add_a_photo"
+                          color="white"
+                          @click="pickBanner"
+                        />
+                        <q-btn
+                          round
+                          dense
+                          flat
+                          size="25px"
+                          icon="close"
+                          color="white"
+                          @click="removeBanner"
+                        />
+                      </div>
+                    </div>
+                    <div class="q-ml-md" style="margin-top: -50px;">
+                      <div class="relative-position" style="display: inline-block;">
+                        <q-avatar size="100px" class="shadow-3 border-white">
+                          <img :src="avatarPreview" alt="Avatar" />
+                        </q-avatar>
+                        <!-- :src="avatarPreview || avatarUrl" -->
+                        <!-- Botão de editar avatar -->
+                        <q-btn
+                          round
+                          dense
+                          flat
+                          icon="add_a_photo"
+                          color="white"
+                          class="absolute-center"
+                          @click="pickAvatar"
+                        />
+                      </div>
+                    </div>
+                    <!-- Inputs ocultos -->
+                    <q-form class="q-mt-lg">
+                        <input ref="avatarInput" type="file" accept="image/*" hidden @change="onAvatarChange" />
+                        <input ref="bannerInput" type="file" accept="image/*" hidden @change="onBannerChange" />
+                        <q-input
+                          v-model="formEditProfile.nome"
+                          label="Nome"
+                          outlined
+                          class="q-mb-sm"
+                          :rules="[
+                            val => val.length >= 3 || 'Mínimo 3 caracteres',
+                            val => val.length <= 32 || 'Máximo 50 caracteres'
+                          ]"
+                        />
+                        <q-input
+                          v-model="formEditProfile.email"
+                          label="E-mail"
+                          type="email"
+                          outlined
+                          class="q-mb-sm"
+                          :rules="[
+                            val => !!val || 'O e-mail é obrigatório',
+                            val => val.length <= 100 || 'Máximo 100 caracteres'
+                          ]"
+                        />
+                        <q-input 
+                          outlined
+                          autogrow
+                          v-model="formEditProfile.bio" 
+                          label="Bio"
+                          class="q-mb-sm"
+                          :rules="[
+                            val => val.length <= 500 || 'Máximo 500 caracteres'
+                          ]"
+                        />
+                        <q-input 
+                          outlined 
+                          v-model="formEditProfile.semestre" 
+                          label="Seu semestre" 
+                          class="q-mb-sm"
+                          :rules="[
+                            val => val.length <= 100 || 'Máximo 15 caracteres'
+                          ]"
+                        />
+                        <q-input 
+                          outlined 
+                          v-model="formEditProfile.linkedin" 
+                          label="Seu Linkedin" 
+                          class="q-mb-sm"
+                          :rules="[
+                            val => val.length <= 100 || 'Máximo 30 caracteres'
+                          ]" 
+                        />
+                        <q-input 
+                          outlined 
+                          v-model="formEditProfile.github" 
+                          label="Seu GitHub" 
+                          class="q-mb-sm"
+                          :rules="[
+                            val => val.length <= 100 || 'Máximo 30 caracteres'
+                          ]" 
+                        />
+                        <q-input 
+                          outlined 
+                          v-model="formEditProfile.habilidades" 
+                          label="Habilidades" 
+                          class="q-mb-sm"
+                          :rules="[
+                            
+                            val => val.length <= 100 || 'Máximo 100 caracteres'
+                          ]"
+                        />
+                      </q-form>
+                    
                   </q-card-section>
 
                   <q-separator />
@@ -81,7 +171,7 @@
 
                   <q-item>
                     <q-item-section avatar><q-icon size="20px" name="fa-brands fa-linkedin" /></q-item-section>
-                    <q-item-section>{{ userStore?.user.linkedin || 'Seu Linkedin' }} </q-item-section>
+                    <q-item-section clickable target="_blank" href="{{ userStore.user.linkedin }}">{{ userStore?.user.linkedin || 'Seu Linkedin' }}</q-item-section>
                   </q-item>
 
                   <q-item>
@@ -107,12 +197,14 @@
         </div>
 </template>
 <script setup>
-  import { ref } from 'vue'
-  import { onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
+  
   import { useUserStore } from 'src/store/user'
   import { useQuasar } from 'quasar'
   
   const $q = useQuasar()
+  const edit = ref(false)
+  const userStore = useUserStore()
 
   const formEditProfile = ref({
       nome: '',
@@ -125,7 +217,16 @@
       habilidades: '',
     })
 
-  const userStore = useUserStore()
+  // refs para inputs de arquivo
+  const avatarInput = ref(null)
+  const bannerInput = ref(null)
+
+  // variáveis para preview e arquivos
+  const avatarPreview = ref(null)
+  const bannerPreview = ref(null)
+  const avatarFile = ref(null)
+  const bannerFile = ref(null)
+
 
   onMounted( async () => {
     await userStore.fetchMe()
@@ -139,8 +240,40 @@
       github: userStore.user.github,
       habilidades: userStore.user.skills,
     }
-    console.log(userStore.user);
+
+    avatarPreview.value = userStore.user.avatarUrl || "../assets/userProfile.png"
+    bannerPreview.value = userStore.user.bannerUrl || ''
   })
+
+  // Funções para abrir os seletores
+  function pickAvatar() {
+    avatarInput.value.click()
+  }
+  function pickBanner() {
+    bannerInput.value.click()
+  }
+
+  // Preview da imagem escolhida
+  function onAvatarChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      avatarFile.value = file
+      avatarPreview.value = URL.createObjectURL(file)
+    }
+  }
+
+  function onBannerChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      bannerFile.value = file
+      bannerPreview.value = URL.createObjectURL(file)
+    }
+  }
+
+  function removeBanner() {
+    bannerFile.value = null
+    bannerPreview.value = ''
+  }
 
   async function updateUser() {
       try {
@@ -172,5 +305,5 @@
       
     }
 
-  const edit = ref(false)
+  
 </script>

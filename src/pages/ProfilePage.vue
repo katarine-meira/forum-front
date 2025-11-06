@@ -6,7 +6,7 @@
         <div class="col-12">
           <div class="relative-position q-ma-md q-mb-lg">
             <q-img
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+              
               class="banner"
               no-transition
               no-spinner
@@ -20,7 +20,7 @@
             <q-card>
               <div class="absolute-bottom flex justify-center">
                 <q-avatar size="100px" class=" shadow-2">
-                  <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+                  <img src="../assets/userProfile.png" />
                 </q-avatar>
               </div>
             </q-card>
@@ -42,8 +42,19 @@
 </template>
 
 <script setup>
-import aboutProfileComp from 'src/components/aboutProfileComp.vue';
-import infoProfileComp from 'src/components/infoProfileComp.vue';
+  import { onMounted } from 'vue'
+  import aboutProfileComp from 'src/components/aboutProfileComp.vue';
+  import infoProfileComp from 'src/components/infoProfileComp.vue';
+  import { useUserStore } from 'src/store/user'
+    
+
+  const userStore = useUserStore()
+
+  onMounted( async () => {
+    await userStore.fetchMe()
+    console.log(userStore.user);
+    
+  })
 
 </script>
 
@@ -52,6 +63,7 @@ import infoProfileComp from 'src/components/infoProfileComp.vue';
   height: 160px;
   object-fit: cover;
   border-radius: 0 0 10px 10px;
+  background-color:darkgray;
 }
 
 .avatar {
