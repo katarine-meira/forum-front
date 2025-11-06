@@ -1,5 +1,4 @@
 <template>
-    
         <!-- Coluna lateral -->
         <div class="col-12 col-md-4">
           <div class="q-ma-md">
@@ -22,6 +21,7 @@
                   <q-card-section style="max-height: 50vh" class="scroll">
                     <q-form>
                       <q-input
+                        v-model="formEditProfile.nome"
                         label="Nome"
                         outlined
                         class="q-mb-md"
@@ -32,6 +32,7 @@
                         ]"
                       />
                       <q-input
+                        v-model="formEditProfile.email"
                         label="E-mail"
                         type="email"
                         outlined
@@ -41,31 +42,20 @@
                           val => val.length <= 100 || 'Máximo 100 caracteres'
                         ]"
                       />
-                      <q-input
-                       
-                        label="Senha"
-                        type="password"
-                        outlined
-                        class="q-mb-md"
-                        :rules="[
-                          val => !!val || 'A senha é obrigatória',
-                          val => val.length >= 6 || 'Mínimo 6 caracteres',
-                          val => val.length <= 32 || 'Máximo 32 caracteres'
-                        ]"
-                      />
-                      <q-input outlined v-model="bio" label="Bio" :dense="dense" />
-                      <q-input outlined v-model="semestre" label="Seu semestre" :dense="dense" />
-                      <q-input outlined v-model="linkedin" label="Seu Linkedin" :dense="dense" />
-                      <q-input outlined v-model="github" label="Seu GitHub" :dense="dense" />
-                      <q-input outlined v-model="habilidades" label="Habilidades" :dense="dense" />
+                      
+                      <q-input outlined v-model="formEditProfile.bio" label="Bio" :dense="dense" />
+                      <q-input outlined v-model="formEditProfile.semestre" label="Seu semestre" :dense="dense" />
+                      <q-input outlined v-model="formEditProfile.linkedin" label="Seu Linkedin" :dense="dense" />
+                      <q-input outlined v-model="formEditProfile.github" label="Seu GitHub" :dense="dense" />
+                      <q-input outlined v-model="formEditProfile.habilidades" label="Habilidades" :dense="dense" />
                     </q-form>
                   </q-card-section>
 
                   <q-separator />
 
                   <q-card-actions align="right">
-                    <q-btn flat label="Decline" color="primary" v-close-popup />
-                    <q-btn flat label="Accept" color="primary" v-close-popup />
+                    <q-btn flat label="Cancelar" color="primary" v-close-popup />
+                    <q-btn flat label="Salvar" color="primary" @click="updateUser()" v-close-popup />
                   </q-card-actions>
                 </q-card>
               </q-dialog>
@@ -120,15 +110,67 @@
   import { ref } from 'vue'
   import { onMounted } from 'vue'
   import { useUserStore } from 'src/store/user'
+  import { useQuasar } from 'quasar'
+  
+  const $q = useQuasar()
+
+  const formEditProfile = ref({
+      nome: '',
+      email: '',
+      senha: '',
+      bio: '',
+      semestre: '',
+      linkedin: '',
+      github: '',
+      habilidades: '',
+    })
 
   const userStore = useUserStore()
 
   onMounted( async () => {
     await userStore.fetchMe()
+
+    formEditProfile.value = {
+      nome: userStore.user.name,
+      email: userStore.user.email,
+      bio: userStore.user.bio,
+      semestre: userStore.user.semester,
+      linkedin: userStore.user.linkedin,
+      github: userStore.user.github,
+      habilidades: userStore.user.skills,
+    }
     console.log(userStore.user);
-    
   })
 
+  async function updateUser() {
+      try {
+        await userStore.updateProfile({
+          name: formEditProfile.value.nome,
+          email: formEditProfile.value.email,
+          bio: formEditProfile.value.bio,
+          semester: formEditProfile.value.semestre,
+          linkedin: formEditProfile.value.linkedin,
+          github: formEditProfile.value.github,
+          skills: formEditProfile.value.habilidades,
+        })
+
+        $q.notify({
+          type: 'positive',
+          message: 'Perfil editado com sucesso!',
+          position: 'top'
+        })
+        
+      } catch (err) {
+        console.error(err)
+
+        $q.notify({
+          type: 'negative',
+          message: 'Erro ao editar perfil',
+          position: 'top'
+        })
+      }
+      
+    }
 
   const edit = ref(false)
 </script>

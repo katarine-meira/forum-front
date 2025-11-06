@@ -2,7 +2,7 @@
     <!-- Coluna principal -->
         <div class="col-12 col-md-8">
           <div class="q-ma-md">
-            <q-card class="q-mb-md">
+            <q-card bordered flat class="q-mb-md">
               <div class="col-6 q-pa-lg">
                 <q-tabs
                   v-model="tab"
