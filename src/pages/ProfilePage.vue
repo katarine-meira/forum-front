@@ -6,7 +6,9 @@
         <div class="col-12">
           <div class="relative-position q-ma-md q-mb-lg">
             <q-img
-              
+              :src="userStore.user.bannerUrl 
+          ? baseURL + userStore.user.bannerUrl 
+          : 'https://via.placeholder.com/900x200?text=Banner+do+Usuário'"
               class="banner"
               no-transition
               no-spinner

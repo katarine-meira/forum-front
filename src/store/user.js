@@ -22,7 +22,12 @@ export const useUserStore = defineStore('user', {
     async updateProfile(payload) {
       this.error = null
       try {
-        const { data } = await api.put('/user/me', payload)
+        const isFormData = payload instanceof FormData
+        const { data } = await api.put('/user/me', payload, {
+          headers: isFormData
+            ? { 'Content-Type': 'multipart/form-data' }
+            : undefined, // se for JSON, deixa o Axios definir
+        })
         
         this.user = data
       } catch (error) {

@@ -15,8 +15,11 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
+    "@nestjs/platform-express": "^11.1.8",
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
+    "ionicons": "^8.0.13",
+    "multer": "^2.0.2",
     "pinia": "^3.0.3",
     "quasar": "^2.16.0",
     "vue": "^3.5.22",

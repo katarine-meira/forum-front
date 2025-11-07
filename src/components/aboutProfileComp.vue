@@ -156,7 +156,7 @@
                 <div class="text-subtitle2 q-mb-sm">Sobre</div>
                 <q-list dense>
                   <q-item class="q-mb-md">
-                    <q-item-section>{{ userStore?.user.bio || 'Sobre você' }}</q-item-section>
+                    <q-item-section>{{ userStore.user.bio }}</q-item-section>
                   </q-item>
 
                   <q-item>
@@ -181,7 +181,7 @@
 
                   <q-item>
                     <q-item-section avatar><q-icon  name="psychology" /></q-item-section>
-                    <q-item-section>{{ userStore?.user.skills || 'Habilidades' }}</q-item-section>
+                    <q-item-section>{{ userStore?.user?.skills || 'Habilidades' }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-card-section>
@@ -241,8 +241,8 @@
       habilidades: userStore.user.skills,
     }
 
-    avatarPreview.value = userStore.user.avatarUrl || "../assets/userProfile.png"
-    bannerPreview.value = userStore.user.bannerUrl || ''
+    avatarPreview.value = userStore.user.avatarUrl 
+    bannerPreview.value = userStore.user.bannerUrl 
   })
 
   // Funções para abrir os seletores
@@ -277,15 +277,30 @@
 
   async function updateUser() {
       try {
-        await userStore.updateProfile({
-          name: formEditProfile.value.nome,
-          email: formEditProfile.value.email,
-          bio: formEditProfile.value.bio,
-          semester: formEditProfile.value.semestre,
-          linkedin: formEditProfile.value.linkedin,
-          github: formEditProfile.value.github,
-          skills: formEditProfile.value.habilidades,
-        })
+        const formData = new FormData()
+
+        // adiciona os campos de texto
+        formData.append('name', formEditProfile.value.nome)
+        formData.append('email', formEditProfile.value.email)
+        formData.append('bio', formEditProfile.value.bio)
+        formData.append('semester', formEditProfile.value.semestre)
+        formData.append('linkedin', formEditProfile.value.linkedin)
+        formData.append('github', formEditProfile.value.github)
+        formData.append('skills', formEditProfile.value.habilidades)
+
+        // adiciona os arquivos (se existirem)
+        if (avatarFile.value) {
+          formData.append('avatar', avatarFile.value)
+        }
+
+        if (bannerFile.value) {
+          formData.append('banner', bannerFile.value)
+        }
+
+        // envia pro store
+        await userStore.updateProfile(formData)
+
+        console.log(formData);
 
         $q.notify({
           type: 'positive',
@@ -304,6 +319,4 @@
       }
       
     }
-
-  
 </script>
