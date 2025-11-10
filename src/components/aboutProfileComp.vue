@@ -23,9 +23,15 @@
                     <div class="relative-position">
                       <!-- :src="bannerPreview || bannerUrl" -->
                       <q-img
-                        :src="bannerPreview"
-                        style="height: 180px; object-fit: cover; background-color: darkgray;"
-                      />
+                        :src="bannerPreview || ''" style="height:180px; background-color:darkgray;"
+                      
+                      >
+                        <!-- <template v-slot:error>
+                          <div class="absolute-full flex flex-center text-white bg-grey">
+                            Sem banner
+                          </div>
+                        </template> -->
+                      </q-img>
                       <div class="absolute-center">
                         <q-btn
                           round
@@ -197,14 +203,24 @@
         </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
-  
+  import { ref } from 'vue'
+  import { watch } from 'vue'
   import { useUserStore } from 'src/store/user'
   import { useQuasar } from 'quasar'
+  import { onMounted } from 'vue'
+
+
   
   const $q = useQuasar()
   const edit = ref(false)
   const userStore = useUserStore()
+
+  onMounted(async () => {
+    await userStore.fetchMe()
+  })
+
+  const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+
 
   const formEditProfile = ref({
       nome: '',
@@ -228,21 +244,27 @@
   const bannerFile = ref(null)
 
 
-  onMounted( async () => {
-    await userStore.fetchMe()
+  watch(edit, (newVal) => {
+    if (newVal) {
+      // sincroniza o form e os previews com os dados atuais
+      formEditProfile.value = {
+        nome: userStore.user.name || '',
+        email: userStore.user.email || '',
+        bio: userStore.user.bio || '',
+        semestre: userStore.user.semester || '',
+        linkedin: userStore.user.linkedin || '',
+        github: userStore.user.github || '',
+        habilidades: userStore.user.skills || '',
+      }
 
-    formEditProfile.value = {
-      nome: userStore.user.name,
-      email: userStore.user.email,
-      bio: userStore.user.bio,
-      semestre: userStore.user.semester,
-      linkedin: userStore.user.linkedin,
-      github: userStore.user.github,
-      habilidades: userStore.user.skills,
+      avatarPreview.value = userStore.user.avatarUrl
+        ? baseURL + userStore.user.avatarUrl
+        : '/src/assets/userProfile.png'
+
+      bannerPreview.value = userStore.user.bannerUrl
+        ? baseURL + userStore.user.bannerUrl
+        : ''
     }
-
-    avatarPreview.value = userStore.user.avatarUrl 
-    bannerPreview.value = userStore.user.bannerUrl 
   })
 
   // Funções para abrir os seletores
