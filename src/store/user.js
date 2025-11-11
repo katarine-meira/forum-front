@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 
+const baseURL = 'http://localhost:3000'
+
+
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: {},
@@ -12,7 +15,16 @@ export const useUserStore = defineStore('user', {
       try {
         const { data } = await api.get('/user/me')
         
-        this.user = data
+        // Monta URLs completas (se existirem)
+        this.user = {
+          ...data,
+          avatarFullUrl: data.avatarUrl
+            ? baseURL + data.avatarUrl
+            : '/src/assets/userProfile.png',
+          bannerFullUrl: data.bannerUrl
+            ? baseURL + data.bannerUrl
+            : ''
+        }
       } catch (error) {
         this.error =
           error.response?.data?.message || 'Erro ao buscar Users'

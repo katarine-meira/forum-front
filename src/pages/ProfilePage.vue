@@ -6,9 +6,7 @@
         <div class="col-12">
           <div class="relative-position q-ma-md q-mb-lg">
             <q-img
-              :src="userStore.user.bannerUrl 
-          ? baseURL + userStore.user.bannerUrl 
-          : 'https://via.placeholder.com/900x200?text=Banner+do+Usuário'"
+              :src="userStore.user.bannerFullUrl"
               class="banner"
               no-transition
               no-spinner
@@ -22,7 +20,7 @@
             <q-card>
               <div class="absolute-bottom flex justify-center">
                 <q-avatar size="100px" class=" shadow-2">
-                  <img src="../assets/userProfile.png" />
+                  <img :src="userStore.user.avatarFullUrl" />
                 </q-avatar>
               </div>
             </q-card>

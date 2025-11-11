@@ -34,7 +34,7 @@
         <div class="text-h6">{{ question.title }}</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none question-body">
+      <q-card-section class="q-pt-none styleText">
         {{ question.body }}
       </q-card-section>
       
@@ -49,7 +49,7 @@
             <div class="text-weight-medium q-mr-sm">{{ answer.user.name }}</div>
             <div class="text-caption text-grey">{{answer.createdAt}}</div>
           </div>
-          <div class="text-body2 q-mt-xs question-body">
+          <div class="text-body2 q-mt-xs styleText">
             {{answer.body}}
           </div>
         </div>
@@ -81,11 +81,5 @@
   }
   .border-left {
     border-left: 2px solid #ddd;
-  }
-
-  .question-body {
-    word-wrap: break-word;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
   }
 </style>

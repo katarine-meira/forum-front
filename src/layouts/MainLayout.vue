@@ -36,4 +36,10 @@ import NavbarComp from 'src/components/NavbarComp.vue';
       "YTUC" 712;
     
   }
+
+.styleText {
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
 </style>
