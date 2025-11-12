@@ -4,7 +4,7 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+            <img :src="question.user.avatarFullUrl">
           </q-avatar>
         </q-item-section>
 
@@ -42,7 +42,7 @@
     <div class="q-ml-xl q-mb-md q-pl-sm border-left" v-for="(answer, i) in question.answers" :key="i">
       <div class="row items-start no-wrap">
         <q-avatar size="35px" class="q-mr-sm">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg" alt="Avatar">
+          <img :src="answer.user.avatarFullUrl" alt="Avatar">
         </q-avatar>
         <div class="column">
           <div class="row items-center">
@@ -71,6 +71,10 @@
 
     onMounted(async () => {
       await questionsStore.getQuestions() // busca as perguntas na API ao carregar
+      console.log(questionsStore.questions);
+
+      
+      
     })
 
 </script>

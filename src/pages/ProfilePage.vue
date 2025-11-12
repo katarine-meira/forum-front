@@ -52,7 +52,7 @@
 
   onMounted( async () => {
     await userStore.fetchMe()
-    console.log(userStore.user);
+   
     
   })
 

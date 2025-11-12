@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
 
+const baseURL = 'http://localhost:3000'
+
 export const useQuestionsStore = defineStore('questions', {
   state: () => ({
     questions: [],
@@ -13,7 +15,28 @@ export const useQuestionsStore = defineStore('questions', {
         const { data } = await api.get('/questions')
         
 
-        this.questions = Array.isArray(data) ? data : data.questions || []
+        this.questions = Array.isArray(data) ? data.map(question => ({
+          ...question,
+          user: {
+            ...question.user,
+            avatarFullUrl: question.user?.avatarUrl
+              ? baseURL + question.user.avatarUrl
+              : '/src/assets/userProfile.png',
+            bannerFullUrl: question.user.bannerUrl
+              ? baseURL + question.user.bannerUrl
+              : ''
+          },
+          answers: question.answers?.map(answer => ({
+            ...answer,
+            user:{
+              ...answer.user,
+              avatarFullUrl: answer.user?.avatarUrl
+              ? baseURL + answer.user.avatarUrl
+              : '/src/assets/userProfile.png'
+            }
+
+          }))
+        })) : data.questions || []
       } catch (error) {
         this.error =
           error.response?.data?.message || 'Erro ao buscar Questions'

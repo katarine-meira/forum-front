@@ -5,7 +5,7 @@
         <q-item>
           <q-item-section avatar>
             <q-avatar>
-              <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+              <img :src="userStore.user.avatarFullUrl">
             </q-avatar>
           </q-item-section>
           <q-item-section>
@@ -32,8 +32,9 @@
 
 <script setup>
   import { useQuestionsStore } from 'src/store/questions'
+  import { useUserStore } from 'src/store/user'
   import { useQuasar } from 'quasar'
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
 
   const $q = useQuasar()
   const questionsStore = useQuestionsStore()
@@ -41,6 +42,12 @@
   const question = ref({
     title: '',
     body: '',
+  })
+
+  const userStore = useUserStore()
+
+  onMounted( async () => {
+    await userStore.fetchMe()
   })
 
   async function createQuestion() {
@@ -55,6 +62,8 @@
         
         question.value.title = ''
         question.value.body = ''
+
+        await questionsStore.getQuestions()
       } catch (err) {
         console.error(err)
 
