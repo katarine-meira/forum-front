@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+import { jwtDecode } from 'jwt-decode'
+
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -8,6 +10,22 @@ export const useAuthStore = defineStore('auth', {
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
+    userData(state) {
+      if (!state.token) return null
+      try {
+        return jwtDecode(state.token)
+      } catch {
+        return null
+      }
+    },
+
+    userRole() {
+      return this.userData?.role || null
+    },
+
+    userId() {
+      return this.userData?.sub || null
+    },
   },
   actions: {
     async register(name, email, password) {
@@ -58,7 +76,22 @@ export const useAuthStore = defineStore('auth', {
 
     initAuth() {
       const token = localStorage.getItem('token')
-      if (token) this.token = token
+      if (!token) return
+
+      try {
+        const decoded = jwtDecode(token)
+
+        // Verifica expiração (exp vem em segundos)
+        if (decoded.exp * 1000 < Date.now()) {
+          this.logout()
+          return
+        }
+
+        this.token = token
+      } catch (error) {
+        this.logout()
+        throw error
+      }
     },
   },
 })

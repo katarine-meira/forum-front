@@ -15,16 +15,16 @@
 
               <q-separator />
 
-              <q-card-section>
+              <q-card-section class="styleText">
                 <div class="text-subtitle2 q-mb-sm about">Sobre</div>
                 <q-list dense>
                   <q-item class="q-mb-md text-grey-9 styleText">
-                    <q-item-section>{{ userStore.user.bio }}</q-item-section>
+                    <q-item-section>{{ userStore?.user.bio || 'Sobre você'}}</q-item-section>
                   </q-item>
 
                   <q-item>
                     <q-item-section avatar><q-icon name="badge" /></q-item-section>
-                    <q-item-section class="text-grey-9">Estudante</q-item-section>
+                    <q-item-section class="text-grey-9">{{ cargo }}</q-item-section>
                   </q-item>
 
                   <q-item>
@@ -43,7 +43,7 @@
                   </q-item>
 
                   <q-item>
-                    <q-item-section avatar><q-icon size="20px" name="fa-brands fa-linkedin" /></q-item-section>
+                    <q-item-section avatar><q-icon size="20px" name="fa-brands fa-github" /></q-item-section>
                     <div v-if="userStore.user.github">  
                       <a class="text-grey-9" :href="userStore.user.github.startsWith('http') 
                       ? userStore.user.github : 'https://' + userStore.user.github" 
@@ -72,14 +72,29 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import { useUserStore } from 'src/store/user'
+  import { useAuthStore } from 'src/store/auth'
   import EditProfileComp from 'src/components/EditProfileComp.vue'
 
 
   const edit = ref(false)
   const userStore = useUserStore()
+  const authStore = useAuthStore()
+  const cargo = ref('Estudante')
+
 
   onMounted(async () => {
     await userStore.fetchMe()
+
+    if(authStore.userRole == 'LEADER'){
+      cargo.value = 'Líder'
+    }
+    else if(authStore.userRole == 'MEMBER'){
+      cargo.value = 'Membro da liga'
+    }
+    else if(authStore.userRole == 'STUDENT'){
+      cargo.value = 'Estudante'
+    }
+    
   })
 
 </script>

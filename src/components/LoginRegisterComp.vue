@@ -130,8 +130,8 @@
 
     async function handleLogin() {
       try {
-        const token = await login(formLogin.value.email, formLogin.value.password)
-        console.log(token, 'login')
+        await login(formLogin.value.email, formLogin.value.password)
+        
 
         $q.notify({
           type: 'positive',
@@ -154,8 +154,7 @@
 
     async function handleRegister() {
       try {
-        const token = await register(formRegister.value.nome, formRegister.value.email, formRegister.value.password)
-        console.log(token, 'register')
+        await register(formRegister.value.nome, formRegister.value.email, formRegister.value.password)
 
         $q.notify({
           type: 'positive',

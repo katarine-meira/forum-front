@@ -13,21 +13,37 @@
           <q-item-label caption>{{ question.createdAt }}</q-item-label>
         </q-item-section>
         
-        <q-btn color="grey" round flat icon="more_vert" @click="more = true"/>
+        <q-btn v-if="canEditOrDelete(question.userId)" color="grey" round flat icon="more_vert" @click="more = true">
 
-        <q-menu anchor="bottom right" self="top right">
-            <q-list style="min-width: 140px">
-                <q-item clickable v-close-popup class="q-pa-md items-center">
-                    <q-icon name="edit" size="16px" class="q-pr-sm"/>
-                    <span class="text-body2">Editar</span>
-                </q-item>
+          <q-menu anchor="bottom right" self="top right">
+              <q-list style="min-width: 140px">
+                  <q-item clickable v-close-popup class="q-pa-md items-center">
+                      <q-icon name="edit" size="16px" class="q-pr-sm"/>
+                      <btn class="text-body2">Editar</btn>
+                  </q-item>
 
-                <q-item clickable v-close-popup class="q-pa-md flex items-center">
-                <q-icon name="delete" size="16px" color="negative" class="q-pr-sm" />
-                <span class="text-body2 text-negative">Excluir</span>
-                </q-item>
-            </q-list>
-        </q-menu>
+                  <q-item clickable v-close-popup class="q-pa-md flex items-center">
+                  <q-icon name="delete" size="16px" color="negative" class="q-pr-sm" />
+                  <btn lable="confirme" class="text-body2 text-negative">Excluir</btn>
+                    <q-dialog v-model="confirme" backdrop-filter="saturate(80%)">
+                      <q-card>
+                        <q-card-section class="text-h6">
+                          Deletar post
+                        </q-card-section>
+
+                        <q-card-section>
+                          Deseja deletar esse post?
+                        </q-card-section>
+
+                        <q-card-actions align="right">
+                          <q-btn flat label="Excluir" color="primary" v-close-popup @click="deleteQuestion(question.id)" />
+                        </q-card-actions>
+                      </q-card>
+                    </q-dialog>
+                  </q-item>
+              </q-list>
+          </q-menu>
+        </q-btn>
       </q-item>
 
       <q-card-section>
@@ -61,21 +77,38 @@
 </template>
 
 <script setup>
-    import { onMounted } from 'vue'
+    import { onMounted, ref } from 'vue'
     import { useQuestionsStore } from 'src/store/questions'
     import InputAnswerComp from 'src/components/InputAnswerComp.vue';
+    import { useAuthStore } from 'src/store/auth'
 
-
-    
     const questionsStore = useQuestionsStore()
-
+    const authStore = useAuthStore()
+    const confirme = ref(false)
+    
+    
     onMounted(async () => {
       await questionsStore.getQuestions() // busca as perguntas na API ao carregar
-      console.log(questionsStore.questions);
-
-      
-      
     })
+
+    const canEditOrDelete = (questionUserId) => {
+      const user = authStore.userData
+      if (!user) return false
+
+      // Leader pode tudo
+      if (user.role === "LEADER") return true
+
+      // Student/Member só podem se forem os donos
+      return user.sub === questionUserId
+    }
+
+    const deleteQuestion = async (id) => {
+      try {
+        await questionsStore.deleteQuestion(id)
+      }catch (error) {
+        console.error(error)
+      }
+    }
 
 </script>
 

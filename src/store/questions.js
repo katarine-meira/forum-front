@@ -59,5 +59,17 @@ export const useQuestionsStore = defineStore('questions', {
         throw error
       }
     },
+    async deleteQuestion(id){
+      this.error = null
+      try {
+        await api.delete(`/questions/${id}`)
+
+        this.questions = this.questions.filter(q => q.id !== id)
+      } catch (error) {
+        this.error = 
+          error.response?.data?.message || 'Erro ao excluir questão!'
+        throw error
+      }
+    }
   },
 })
