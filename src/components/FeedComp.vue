@@ -16,36 +16,20 @@
         <q-btn v-if="canEditOrDelete(question.userId)" color="grey" round flat icon="more_vert" @click="more = true">
 
           <q-menu anchor="bottom right" self="top right">
-              <q-list style="min-width: 140px">
-                  <q-item clickable v-close-popup class="q-pa-md items-center">
-                      <q-icon name="edit" size="16px" class="q-pr-sm"/>
-                      <btn class="text-body2">Editar</btn>
-                  </q-item>
+            <q-list style="min-width: 140px">
+              <q-item clickable v-close-popup class="q-pa-md items-center">
+                <q-icon name="edit" size="16px" class="q-pr-sm"/>
+                <btn class="text-body2">Editar</btn>
+              </q-item>
 
-                  <q-item clickable v-close-popup class="q-pa-md flex items-center">
-                  <q-icon name="delete" size="16px" color="negative" class="q-pr-sm" />
-                  <btn lable="confirme" class="text-body2 text-negative">Excluir</btn>
-                    <q-dialog v-model="confirme" backdrop-filter="saturate(80%)">
-                      <q-card>
-                        <q-card-section class="text-h6">
-                          Deletar post
-                        </q-card-section>
-
-                        <q-card-section>
-                          Deseja deletar esse post?
-                        </q-card-section>
-
-                        <q-card-actions align="right">
-                          <q-btn flat label="Excluir" color="primary" v-close-popup @click="deleteQuestion(question.id)" />
-                        </q-card-actions>
-                      </q-card>
-                    </q-dialog>
-                  </q-item>
-              </q-list>
+              <q-item clickable @click="idToDelete = question.id; confirme = true" v-close-popup class="q-pa-md flex items-center">
+                <q-icon name="delete" size="16px" color="negative" class="q-pr-sm" />
+                <btn @click="confirme = true" class="text-body2 text-negative">Excluir</btn>
+              </q-item>
+            </q-list>
           </q-menu>
         </q-btn>
       </q-item>
-
       <q-card-section>
         <div class="text-h6">{{ question.title }}</div>
       </q-card-section>
@@ -72,43 +56,60 @@
       </div>
     </div>
     <input-answer-comp :question-id="question.id"/>
-    
   </div>
+  <q-dialog v-model="confirme" backdrop-filter="saturate(80%)">
+    <q-card>
+      <q-card-section class="text-h6">
+        Excluir Post
+      </q-card-section>
+
+      <q-card-section>
+        Tem certeza que deseja excluir esse post?
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="Cancelar" color="primary" v-close-popup/>
+        <q-btn flat label="Excluir" color="negative" v-close-popup @click="deleteQuestion(idToDelete)" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue'
-    import { useQuestionsStore } from 'src/store/questions'
-    import InputAnswerComp from 'src/components/InputAnswerComp.vue';
-    import { useAuthStore } from 'src/store/auth'
+  import { onMounted, ref } from 'vue'
+  import { useQuestionsStore } from 'src/store/questions'
+  import InputAnswerComp from 'src/components/InputAnswerComp.vue';
+  import { useAuthStore } from 'src/store/auth'
 
-    const questionsStore = useQuestionsStore()
-    const authStore = useAuthStore()
-    const confirme = ref(false)
-    
-    
-    onMounted(async () => {
-      await questionsStore.getQuestions() // busca as perguntas na API ao carregar
-    })
+  const questionsStore = useQuestionsStore()
+  const authStore = useAuthStore()
+  const confirme = ref(false)
+  const idToDelete = ref(null)
 
-    const canEditOrDelete = (questionUserId) => {
-      const user = authStore.userData
-      if (!user) return false
+  
+  
+  onMounted(async () => {
+    await questionsStore.getQuestions() // busca as perguntas na API ao carregar
+  })
 
-      // Leader pode tudo
-      if (user.role === "LEADER") return true
+  const canEditOrDelete = (questionUserId) => {
+    const user = authStore.userData
+    if (!user) return false
 
-      // Student/Member só podem se forem os donos
-      return user.sub === questionUserId
+    // Leader pode tudo
+    if (user.role === "LEADER") return true
+
+    // Student/Member só podem se forem os donos
+    return user.sub === questionUserId
+  }
+
+  const deleteQuestion = async (id) => {
+    try {
+      await questionsStore.deleteQuestion(id)
+    }catch (error) {
+      console.error(error)
     }
-
-    const deleteQuestion = async (id) => {
-      try {
-        await questionsStore.deleteQuestion(id)
-      }catch (error) {
-        console.error(error)
-      }
-    }
+  }
 
 </script>
 

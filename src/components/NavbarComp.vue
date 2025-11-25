@@ -1,9 +1,9 @@
 <template>
     <div>
-      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
+      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'" style="height: 70px;">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>LITEC</q-toolbar-title>
+          <q-toolbar-title class="q-ml-md">LITEC</q-toolbar-title>
 
           <q-btn id="links" @click="userLogout">
            <q-icon name="logout" />
@@ -26,7 +26,7 @@
         :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
       >
         <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-          <q-list padding>
+          <q-list >
             <template v-for="(menuItem, index) in menuList.filter(i => !i.down)" :key="index">
               <q-space v-if="index === 3" />
               <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class">
