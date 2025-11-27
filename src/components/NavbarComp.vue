@@ -1,6 +1,6 @@
 <template>
     <div>
-      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'" style="height: 70px;">
+      <q-header elevated class="color_drawer" style="height: 70px;">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title class="q-ml-md">LITEC</q-toolbar-title>
@@ -22,33 +22,33 @@
 
         :width="200"
         :breakpoint="620"
-        bordered
-        :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+        
+        :class=" 'bg-grey-10'"
       >
         <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
           <q-list >
             <template v-for="(menuItem, index) in menuList.filter(i => !i.down)" :key="index">
               <q-space v-if="index === 3" />
-              <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class">
+              <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class" class="links">
                 <q-item-section avatar>
-                  <q-icon :name="menuItem.icon" />
+                  <q-icon :name="menuItem.icon" color="white"  />
                 </q-item-section>
-                <q-item-section>
+                <q-item-section class="text-grey-1">
                   {{ menuItem.label }}
                 </q-item-section>
               </q-item>
               <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
             </template>
           </q-list>
-          <q-list padding>
+          <q-list>
             <div class="absolute-bottom full-width">
               <template v-for="(menuItem, index) in menuList.filter(i => i.down)" :key="index">
                 <q-space v-if="index === 3" />
                 <q-item clickable :active="route.path === menuItem.link" v-ripple :to="menuItem.link" :class="menuItem.class">
                   <q-item-section avatar>
-                    <q-icon :name="menuItem.icon" />
+                    <q-icon :name="menuItem.icon" color="white" />
                   </q-item-section>
-                  <q-item-section>
+                  <q-item-section class="text-grey-1">
                     {{ menuItem.label }}
                   </q-item-section>
                 </q-item>
@@ -154,5 +154,8 @@ const { logout } = useAuthStore()
     }
     #links:hover {
         color: white;
+    }
+    .color_drawer{
+      background-color: #111111 !important; 
     }
 </style>

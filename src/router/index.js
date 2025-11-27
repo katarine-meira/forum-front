@@ -52,12 +52,10 @@ export default defineRouter(function (/* { store, ssrContext } */) {
         return next('/auth')
       }
     }
-
     // 2) Rotas que exigem autenticação
     if (to.meta.requiresAuth && !auth.isAuthenticated) {
       return next('/auth')
     }
-
     // 3) Rotas que exigem permissões específicas
     if (to.meta.requiresAdmin && auth.userRole !== 'admin') {
       return next('/unauthorized') // você cria essa página
@@ -65,7 +63,6 @@ export default defineRouter(function (/* { store, ssrContext } */) {
 
     next()
   })
-
 
   return Router
 })
