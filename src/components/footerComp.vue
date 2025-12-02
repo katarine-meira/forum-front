@@ -1,7 +1,7 @@
 <template>
     <q-footer elevated class="color_footer">
         <q-toolbar>
-          <q-toolbar-title class="text-4 text-center q-pa-sm">Liga Acadêmica de Tecnologia &copy; {{ano_atual}}</q-toolbar-title>
+          <q-toolbar-title style="font-size: 18px; height: 100px;" class="flex flex-center q-pa-sm">Liga Acadêmica de Tecnologia &copy; {{ano_atual}}</q-toolbar-title>
         </q-toolbar>
     </q-footer>
 </template>
@@ -12,6 +12,6 @@
 
 <style scoped>
 .color_footer{
-    background-color: #1a112b;
+    background-color: #161f47;
 }
 </style>

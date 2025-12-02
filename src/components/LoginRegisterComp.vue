@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-none row no-wrap" style="width: 900px; max-width: 95vw;">
     <!-- LADO ESQUERDO (IMAGEM) -->
-    <div class="col-6 bg-primary flex flex-center">
+    <div class="col-6 bg-primary ">
         <img
           src="../assets/LITECApp.png"
           alt="Imagem de login"
