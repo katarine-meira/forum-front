@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', {
           ...data,
           avatarFullUrl: data.avatarUrl
             ? baseURL + data.avatarUrl
-            : '/src/assets/userProfile.png',
+            : 'public/imgs/userProfile.png',
           bannerFullUrl: data.bannerUrl
             ? baseURL + data.bannerUrl
             : ''

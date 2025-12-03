@@ -1,39 +1,47 @@
 <template>
-    <q-page class="fundo_site q-pa-none">
+    <q-page class="fundo_site">
         <q-img
-        src="../assets/bannerLitec.png"
+        src="public/imgs/bannerLitec.png"
         style="height: 400px;"
         />
         <div style="margin-inline: 150px;" class="">
             <h1 class="q-mt-xl text-h4 text-bold">SÍTES DA INSTITUIÇÃO</h1>
-            <div class="">
-                <div class="row q-col-gutter-md">
-                    <div class="col-12 col-md-4">
-                        <a href="https://aluno.uniftc.edu.br/#/home" target="_blank">
-                            <q-img class="site-card" src="../assets/imgPortalDoAluno.png" />
-                        </a>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <a href="https://ftc.blackboard.com/webapps/bbgs-autosignon-BB5d26151dc6420/autoSignon.do?timestamp=1764688150000&userId=08162361510&auth=5a795b56fdbe90ec9a2b1be9b3cde17e&forward=https://ftc.blackboard.com/webapps/" target="_blank">
-                            <q-img class="site-card" src="../assets/imgBlackboard.png" />
-                        </a>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <a href="https://portalaluno.ftc.br/aonline/AOnline/avisos/T016D.tp" target="_blank">
-                            <q-img class="site-card" src="../assets/imgLyceum.png" />
-                        </a>
-                    </div>
+            <div class="row q-col-gutter-md">
+                <div class="col-12 col-md-4" v-for="(links, index) in linksList" :key="index">
+                    <a :href="links.link" target="_blank">
+                        <q-img class="site-card" :src="links.img" />
+                    </a>
                 </div>
             </div>
         </div>
-        <br><br><br><br>
+       
+    
 
     </q-page>
     
 </template>
 
 <script setup>
-
+    const linksList = [
+        {
+          label: 'Portal do Aluno',
+          description: 'Site Institucional',
+          link: 'https://aluno.uniftc.edu.br/#/home',
+          img: '/imgPortalDoAluno.png'
+        },
+        {
+          label: 'Blackboard',
+          description: 'Site Institucional',
+          link: 'https://ftc.blackboard.com/webapps/bbgs-autosignon-BB5d26151dc6420/autoSignon.do?timestamp=1764688150000&userId=08162361510&auth=5a795b56fdbe90ec9a2b1be9b3cde17e&forward=https://ftc.blackboard.com/webapps/',
+          img: '../assets/imgBlackboard.png'
+        },
+        {
+          label: 'Sistema Acadêmico',
+          description: 'Site Institucional',
+          link: 'https://portalaluno.ftc.br/aonline/AOnline/avisos/T016D.tp',
+          img: '../assets/imgLyceum.png'
+        },
+    ]
 </script>
 
 <style scoped>
@@ -44,7 +52,7 @@
 }
 .fundo_site{
     background-color: #ece8e1;
-    min-height: 100vh;
+   
 }
 .site-card{
   height: 300px;

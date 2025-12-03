@@ -5,7 +5,7 @@
       <!-- aqui coloca as pages de home -->
       <router-view></router-view>
     </q-page-container>
-    <footer-comp/>
+    <footer-comp v-if="!$route.meta.hideFooter"/>
   </q-layout>
 </template>
 
@@ -37,7 +37,7 @@ import footerComp from 'src/components/footerComp.vue';
       "YTFI" 738,
       "YTLC" 514,
       "YTUC" 712;
-    
+          
   }
 
 .styleText {

@@ -21,7 +21,7 @@ export const useQuestionsStore = defineStore('questions', {
             ...question.user,
             avatarFullUrl: question.user?.avatarUrl
               ? baseURL + question.user.avatarUrl
-              : '/src/assets/userProfile.png',
+              : 'public/imgs/userProfile.png',
             bannerFullUrl: question.user.bannerUrl
               ? baseURL + question.user.bannerUrl
               : ''
@@ -32,7 +32,7 @@ export const useQuestionsStore = defineStore('questions', {
               ...answer.user,
               avatarFullUrl: answer.user?.avatarUrl
               ? baseURL + answer.user.avatarUrl
-              : '/src/assets/userProfile.png'
+              : 'public/imgs/userProfile.png'
             }
 
           }))

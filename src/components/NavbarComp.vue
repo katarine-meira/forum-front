@@ -80,7 +80,7 @@ const { logout } = useAuthStore()
         icon: 'home',
         label: 'Home',
         separator: true,
-        link: '/home'
+        link: '/'
     },
     {
         icon: 'chat',

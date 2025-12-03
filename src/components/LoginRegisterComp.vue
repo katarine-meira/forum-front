@@ -3,7 +3,7 @@
     <!-- LADO ESQUERDO (IMAGEM) -->
     <div class="col-6 bg-primary ">
         <img
-          src="../assets/LITECApp.png"
+          src="public/imgs/LITECApp.png"
           alt="Imagem de login"
           class="full-width"
           style="object-fit: cover; height: 100%;"
@@ -139,7 +139,7 @@
           position: 'top'
         })
 
-        router.push("/home")
+        router.push("/")
       } catch (err) {
         console.error(err)
 
@@ -162,7 +162,7 @@
           position: 'top'
         })
 
-        router.push("/home")
+        router.push("/")
       } catch (err) {
         let msg = err.response?.data?.message
 
