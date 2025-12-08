@@ -165,16 +165,6 @@
         router.push("/")
       } catch (err) {
         let msg = err.response?.data?.message
-
-        if (Array.isArray(msg)) {
-          msg = msg.map(m => {
-            if (m.includes('email must be an email')) return 'E-mail inválido'
-            if (m.includes('name must be longer')) return 'O nome deve ter no mínimo 3 caracteres'
-            if (m.includes('password must be longer')) return 'A senha deve ter no mínimo 6 caracteres'
-            return m // caso não encontre tradução, mantém original
-          }).join('\n')
-        }
-
         $q.notify({
           type: 'negative',
           message: msg || 'Erro ao registrar usuário',

@@ -6,19 +6,27 @@
         />
         <div class="container-padrao">
             <h1 class="q-mt-xl text-h4 text-bold">SÍTES DA INSTITUIÇÃO</h1>
-            <div class="row q-col-gutter-md">
+            <div class="row q-col-gutter-md q-mb-xl">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4" v-for="(link, index) in linksList" :key="index">
                     <a :href="link.link" target="_blank">
                         <q-img class="site-card" :src="link.img" style="width: 100%; height: auto;" />
                     </a>
-                      <h6 class="q-mt-xs">{{ link.description }}</h6>
+                    <h6 class="q-mt-xs">{{ link.description }}</h6>
                 </div>
             </div>
           </div>
-          <div>
-            <div class="bloco-fundo-overlay q-pa-xl">
-              <h2 class="text-white">teste</h2>
-              
+          <div class="bloco-fundo-overlay">
+            <div class="container-padrao">
+              <div class="row q-col-gutter-md  q-pa-xl">
+                <div class="hover-img col-12 col-sm-6 col-md-4 col-2-4" v-for="(membro, index) in integrantes" :key="index">
+                  <q-img class="membros-card" :src="membro.img" style="width: 100%;" >
+                    <div class="column absolute-full overlay flex flex-center">
+                      <div class="text-h6 text-white">{{ membro.name }}</div>
+                      <div class="text-white" style="font-size: 15px;">{{ membro.cargo }}</div>
+                    </div>
+                  </q-img>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -45,6 +53,58 @@
           description: 'Site Institucional',
           link: 'https://portalaluno.ftc.br/aonline/AOnline/avisos/T016D.tp',
           img: 'public/imgs/imgLyceum.png'
+        },
+    ]
+    const integrantes = [
+        {
+          cargo: 'Lider',
+          name: 'Katarine',
+          img: 'public/imgs/integrantes/membroLiga10.jpg'
+        },
+        {
+          cargo: 'Lider',
+          name: 'Nycolle',
+          img: 'public/imgs/integrantes/membroLiga9.jpg'
+        },
+        {
+          cargo: 'Diretor de Ciências',
+          name: 'Bruno',
+          img: 'public/imgs/integrantes/membroLiga8.png'
+        },
+        {
+          cargo: 'Diretora de Comunicação',
+          name: 'Rafaela',
+          img: 'public/imgs/integrantes/membroLiga7.jpg'
+        },
+        {
+          cargo: 'Diretora de Extensão',
+          name: 'Samily',
+          img: 'public/imgs/integrantes/membroLiga6.jpg'
+        },
+        {
+          cargo: 'Secretário',
+          name: 'João Vitor',
+          img: 'public/imgs/integrantes/membroLiga5.png'
+        },
+        {
+          cargo: 'Diretor de Comunicação',
+          name: 'Daniel',
+          img: 'public/imgs/integrantes/membroLiga4.png'
+        },
+        {
+          cargo: 'Diretor Acadêmico',
+          name: 'Asafe',
+          img: 'public/imgs/integrantes/membroLiga3.png'
+        },
+        {
+          cargo: 'Secretário',
+          name: 'Pedro',
+          img: 'public/imgs/integrantes/membroLiga2.png'
+        },
+        {
+          cargo: 'Diretora de Comunicação',
+          name: 'Tarscilla',
+          img: 'public/imgs/integrantes/membroLiga1.png'
         },
     ]
 </script>
@@ -100,5 +160,22 @@
   background: linear-gradient(135deg, #1A237E, #172380, #3F51B5, #3548b3);
   background-size: cover;
   background-position: center;
+}
+
+@media (min-width: 1440px) {
+  .col-2-4 {
+    width: 20%;
+  }
+}
+.membros-card{
+  height: 250px;
+}
+.hover-img .overlay{
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: 0.3s;
+}
+.hover-img:hover .overlay {
+  opacity: 1;
 }
 </style>
