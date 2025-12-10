@@ -1,7 +1,7 @@
 <template>
     <q-page class="fundo_site">
         <q-img
-        src="public/imgs/bannerLitec.png"
+        src="imgs/bannerLitec.png"
         style="height: 400px;"
         />
         <div class="container-padrao">
@@ -36,7 +36,7 @@
           <h1 class="text-h4 text-bold marginTop">NOSSOS OBJETIVOS</h1>
           <div class="row q-col-gutter-md">
               <div class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="(objetivo, index) in objetivoList" :key="index">
-                  <q-card flat :bordered="objetivo.borderFalse" class="my-card marginBottom bg-transparent" style="height: 200px;">
+                  <q-card flat :bordered="objetivo.borderFalse" class="cardObjetivo  bg-transparent" style="height: 200px;">
                     <q-card-section>
                       <div class="text-h6 barlow-medium">{{objetivo.title}}</div>
                     </q-card-section>
@@ -50,80 +50,118 @@
               </div>
           </div>
         </div>
+        <div class="container-padrao marginTop">
+          <div class="row q-col-gutter-md">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <blockquote
+                class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/reel/DOluvtpgAh4/"
+                data-instgrm-version="14"
+                style="background:#FFF; border:0; margin: 0 auto; max-width:540px; width:100%;"
+              ></blockquote>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <blockquote
+                class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/reel/DOluvtpgAh4/"
+                data-instgrm-version="14"
+                style="background:#FFF; border:0; margin: 0 auto; max-width:540px; width:100%;"
+              ></blockquote>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <blockquote
+                class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/reel/DOluvtpgAh4/"
+                data-instgrm-version="14"
+                style="background:#FFF; border:0; margin: 0 auto; max-width:540px; width:100%;"
+              ></blockquote>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <blockquote
+                class="instagram-media"
+                data-instgrm-permalink="https://www.instagram.com/reel/DOluvtpgAh4/"
+                data-instgrm-version="14"
+                style="background:#FFF; border:0; margin: 0 auto; max-width:540px; width:100%;"
+              ></blockquote>
+            </div>
+          </div>
+        </div>
+
     </q-page>
 </template>
 
 <script setup>
+  import { onMounted } from "vue";
     const linksList = [
         {
           label: 'Portal do Aluno',
           description: 'Portal do Aluno FTC',
           link: 'https://aluno.uniftc.edu.br/#/home',
-          img: 'public/imgs/imgPortalDoAluno.png'
+          img: 'imgs/imgPortalDoAluno.png'
         },
         {
           label: 'Blackboard',
           description: 'Blackboard',
           link: 'https://ftc.blackboard.com/webapps/bbgs-autosignon-BB5d26151dc6420/autoSignon.do?timestamp=1764688150000&userId=08162361510&auth=5a795b56fdbe90ec9a2b1be9b3cde17e&forward=https://ftc.blackboard.com/webapps/',
-          img: 'public/imgs/imgBlackboard.png'
+          img: 'imgs/imgBlackboard.png'
         },
         {
           label: 'Sistema Acadêmico',
           description: 'Site Institucional',
           link: 'https://portalaluno.ftc.br/aonline/AOnline/avisos/T016D.tp',
-          img: 'public/imgs/imgLyceum.png'
+          img: 'imgs/imgLyceum.png'
         },
     ]
     const integrantesList = [
         {
           cargo: 'LIDER',
           name: 'Katarine',
-          img: 'public/imgs/integrantes/membroLiga10.jpg'
+          img: 'imgs/integrantes/membroLiga10.jpg'
         },
         {
           cargo: 'LIDER',
           name: 'Nycolle',
-          img: 'public/imgs/integrantes/membroLiga9.jpg'
+          img: 'imgs/integrantes/membroLiga9.jpg'
         },
         {
           cargo: 'DIRETOR DE CIÊNCIAS',
           name: 'Bruno',
-          img: 'public/imgs/integrantes/membroLiga8.png'
+          img: 'imgs/integrantes/membroLiga8.png'
         },
         {
           cargo: 'DIRETORA DE COMUNICAÇÃO',
           name: 'Rafaela',
-          img: 'public/imgs/integrantes/membroLiga7.jpg'
+          img: 'imgs/integrantes/membroLiga7.jpg'
         },
         {
           cargo: 'DIRETORA DE EXTENSÃO',
           name: 'Samily',
-          img: 'public/imgs/integrantes/membroLiga6.jpg'
+          img: 'imgs/integrantes/membroLiga6.jpg'
         },
         {
           cargo: 'SECRETÁRIO',
           name: 'João Vitor',
-          img: 'public/imgs/integrantes/membroLiga5.png'
+          img: 'imgs/integrantes/membroLiga5.png'
         },
         {
           cargo: 'DIRETOR DE COMUNICAÇÃO',
           name: 'Daniel',
-          img: 'public/imgs/integrantes/membroLiga4.png'
+          img: 'imgs/integrantes/membroLiga4.png'
         },
         {
           cargo: 'DIRETOR ACADÊMICO',
           name: 'Asafe',
-          img: 'public/imgs/integrantes/membroLiga3.png'
+          img: 'imgs/integrantes/membroLiga3.png'
         },
         {
           cargo: 'SECRETÁRIO',
           name: 'Pedro',
-          img: 'public/imgs/integrantes/membroLiga2.png'
+          img: 'imgs/integrantes/membroLiga2.png'
         },
         {
           cargo: 'DIRETORA DE COMUNICAÇÃO',
           name: 'Tarscilla',
-          img: 'public/imgs/integrantes/membroLiga1.png'
+          img: 'imgs/integrantes/membroLiga1.png'
         },
     ]
     const objetivoList = [
@@ -148,6 +186,14 @@
         borderFalse: 'false'
       }
       ]
+  
+  onMounted(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+  });
+     
 </script>
 
 <style scoped>
@@ -236,6 +282,16 @@
   opacity: 0;
   transition: 0.3s;
 }
+@media (max-width: 600px) {
+  .membros-card{
+    height: 300px;
+  }
+  .hover-img .overlay{
+    opacity: 1;
+
+  }
+}
+
 .hover-img:hover .overlay {
   opacity: 1;
 }
@@ -244,5 +300,9 @@
 }
 .marginBottom{
   margin-bottom: 100px;
+}
+.cardObjetivo:hover{
+  transform: scale(1.15);
+
 }
 </style>

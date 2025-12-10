@@ -3,7 +3,7 @@
     <!-- LADO ESQUERDO (IMAGEM) -->
     <div class="col-6 bg-primary ">
         <img
-          src="public/imgs/LITECApp.png"
+          src="imgs/LITECApp.png"
           alt="Imagem de login"
           class="full-width"
           style="object-fit: cover; height: 100%;"
